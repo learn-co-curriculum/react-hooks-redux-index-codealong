@@ -9,13 +9,13 @@ With this lesson we'll finish up the last section by displaying our list of todo
 
 We need to give users the ability to click on a specific Todo, and then for that todo to disappear.  To implement this, we will stick with our practice of not directly manipulating the dom, but instead updating the state of our store, and then using react to display the current list of todos.
 
-## Deleting todos
+## Displaying todos
 
 Ok, so if you open the components/todos/Todos.js you can see how we are currently rendering todos.  Currently each todo is just a list element, but soon we will need a button for each todo as well.  This simple list element is now having its own appearance, and behavior, so let's make a Todo component where we can manage each todo.
 
 If you look in the components/todos/ folder, you can see that we already have a file called Todo.js and some code already set up in there.  
 
-All it does currently is render some text.  But we can move the code from our Todos.js file where we render out each li, and instead move that to the render function of our Todo component.  Then in the Todos component, instead of rendering out a 
+All it does currently is render some text.  But we can move the code from our Todos.js file where we render out each li, and instead move that to the render function of our Todo component.  Then in the Todos component, instead of rendering out a
 
 Now completing this is not so bad.  We can access the list of todos inside the Todos component with a call to this.props.store.getState().todos.  So now, we just need to iterate through each todo in the list and create an li element for each one.  Go on and give it and give it a shot, I'll be waiting for you below.  
 
@@ -26,7 +26,7 @@ src/components/Todos.js
 	import React, { Component } from 'react'
 
 	class Todos extends Component {
-	
+
 	  render(){
 	    let todos = this.props.store.getState().todos.map(function(todo){
 	      return <li> {todo.text} </li>
@@ -55,9 +55,9 @@ Ok, the next thing to fix is to ensure that each time we submit a todo, we clear
 	   	event.preventDefault()
    		this.setState({text: ''}) //new line
    	 	this.props.store.dispatch({type: 'ADD_TODO', payload: this.state})
-	  } 
+	  }
 
-Ok, so this line is properly resetting the component's state to a blank string each time a user submits the form.  However, if you try submitting the form now, you won't see that input being reset.  This is because the input's value is not referencing that state.  But we can ensure that the input does reference the state by changing our render() method in the createTodo component to the following: 
+Ok, so this line is properly resetting the component's state to a blank string each time a user submits the form.  However, if you try submitting the form now, you won't see that input being reset.  This is because the input's value is not referencing that state.  But we can ensure that the input does reference the state by changing our render() method in the createTodo component to the following:
 
 	  render(){
 	    return(
@@ -66,14 +66,14 @@ Ok, so this line is properly resetting the component's state to a blank string e
 	          <p>
 	            <label>add todo</label>
 					// we change the input below
-	            <input type="text" value={this.state.text} onChange={this.handleChange.bind(this)}/> 
+	            <input type="text" value={this.state.text} onChange={this.handleChange.bind(this)}/>
 	          </p>
 	          <input type="submit" />
 	        </form>
 	      </div>
       )
   	}
-  
+
 So as you can see the value of the input now directly corresponds to the component's state.  This is called a controlled component (see the references section below).  Now if you retry submitting the form in your react app, you will see everything working.
 
 ## Summary
