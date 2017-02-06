@@ -11,17 +11,10 @@ We need to give users the ability to click on a specific Todo, and then for that
 
 ## Displaying todos
 
-Ok, so if you open the components/todos/Todos.js you can see how we are currently rendering todos.  Currently each todo is just a list element, but soon we will need a button for each todo as well.  This simple list element is now having its own appearance, and behavior, so let's make a Todo component where we can manage each todo.
+Ok, so if you open the components/todos/Todos.js you can see how we are currently rendering todos.  
 
-If you look in the components/todos/ folder, you can see that we already have a file called Todo.js and some code already set up in there.  
-
-All it does currently is render some text.  But we can move the code from our Todos.js file where we render out each li, and instead move that to the render function of our Todo component.  Then in the Todos component, instead of rendering out a
-
-Now completing this is not so bad.  We can access the list of todos inside the Todos component with a call to this.props.store.getState().todos.  So now, we just need to iterate through each todo in the list and create an li element for each one.  Go on and give it and give it a shot, I'll be waiting for you below.  
-
-Ok, ready to see the code?
-
-src/components/Todos.js
+```javascript
+  // src/components/Todos.js
 
 	import React, { Component } from 'react'
 
@@ -40,6 +33,51 @@ src/components/Todos.js
 	}
 
 	export default Todos;
+```
+Currently each todo is just a list element, but soon we will need a button for each todo as well.  This simple list element is now having its own appearance, and behavior, so let's make a Todo component where we can manage each todo.
+
+If you look in the components/todos/ folder, you can see that we already have a file called Todo.js and some code already set up in there.  
+
+All it does currently is render some text.  But we can move the code from our Todos.js file where we render out each li, and instead move that to the render function of our Todo component.  Then in the Todos component, instead of rendering out a text,
+
+Now completing this is not so bad.  We can access the list of todos inside the Todos component with a call to this.props.store.getState().todos.  So now, we just need to iterate through each todo in the list and create an li element for each one.  Go on and give it and give it a shot, I'll be waiting for you below.  
+
+Ok, ready to see the code?
+```javascript
+  // src/components/Todos.js
+
+	import React, { Component } from 'react'
+  import Todo from './Todo'
+
+	class Todos extends Component {
+
+	  render(){
+	    let todos = this.props.store.getState().todos.map(function(todo){
+	      return <li> <Todo text={todo.text} /> </li>
+	    })
+	    return(
+	      <ul>
+	        {todos}
+	      </ul>
+	    )
+	  }
+	}
+
+	export default Todos;
+
+  // src/components/Todo.js
+  import React, { Component } from 'react'
+
+  class Todo extends Component {
+    render(){
+      return(
+        <li>
+          {this.props.text}
+        </li>
+      )
+    }
+  }
+```
 
 Boot up the react/redux app and give it a shot.  You should see a functioning application.  
 
