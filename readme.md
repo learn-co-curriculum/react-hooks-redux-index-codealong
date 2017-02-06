@@ -7,7 +7,7 @@ With this lesson we'll finish up the last section by displaying our list of todo
 
 ## Goal
 
-We need to give users the ability to click on a specific Todo, and then for that todo to disappear.  To implement this, we will stick with our practice of not directly manipulating the dom, but instead updating the state of our store, and then using react to display the current list of todos.
+Our state is properly updating but we are not displaying these updates to the user.  We need a component that references the store and then uses the data from the store to reference the list of Todos.
 
 ## Displaying todos
 
@@ -34,27 +34,40 @@ Ok, so if you open the components/todos/Todos.js you can see how we are currentl
 
 	export default Todos;
 ```
-Currently each todo is just a list element, but soon we will need a button for each todo as well.  This simple list element is now having its own appearance, and behavior, so let's make a Todo component where we can manage each todo.
 
-If you look in the components/todos/ folder, you can see that we already have a file called Todo.js and some code already set up in there.  
+So above you can see that we have passed our store to the Todos component as a prop.  Then we accessing the array of todos by calling store.getState(), and calling map to return an array of react elements, each of type li. 
 
-All it does currently is render some text.  But we can move the code from our Todos.js file where we render out each li, and instead move that to the render function of our Todo component.  Then in the Todos component, instead of rendering out a text,
+## Refactoring into a Todo Component 
 
-Now completing this is not so bad.  We can access the list of todos inside the Todos component with a call to this.props.store.getState().todos.  So now, we just need to iterate through each todo in the list and create an li element for each one.  Go on and give it and give it a shot, I'll be waiting for you below.  
+So each todo is just a list element, but soon we will need a button for each todo as well.  This simple list element is now having its own appearance, and behavior, so let's make a Todo component where we can manage each todo.  Then, in our Todos component we will no longer have map return an array of li elements, but rather have it return an array of Todo components, and each Todo component will render the list element.  
 
-Ok, ready to see the code?
+That was a mouthful.  Let's make the changes.  
 
-`src/components/Todos.js`
+If you open up the code, you'll see that inside the src/components/todos folder, we have a file Todo.js.  Inside it we have a Todo component that currenly just renders a div.  Remember we want it to instead render out the li element that currently lives inside the map function in the Todos component.  Let's move it to our todo component.
 
-```javascript
+src/components/todos/Todo.js
+
 	import React, { Component } from 'react'
-  import Todo from './Todo'
+
+	class Todo extends Component {
+	  render(){
+	    return (
+	      <li>{this.props.text}</li>
+	    )
+	  }
+	}
+
+	export default Todo
+
+Now we need to call that component from our map function in the Todos component.  And we need to tell each individual Todo about the text that it is rendering.  So we change our Todos component to the following.
+
+	import React, { Component } from 'react'
+	import Todo from './Todo' //changed line
 
 	class Todos extends Component {
-
 	  render(){
 	    let todos = this.props.store.getState().todos.map(function(todo){
-	      return <li> <Todo text={todo.text} /> </li>
+	      return <Todo text={todo.text} /> //changed line
 	    })
 	    return(
 	      <ul>
@@ -63,28 +76,10 @@ Ok, ready to see the code?
 	    )
 	  }
 	}
-```
-
-`src/components/Todo.js`
-
-```javascript
+	
 	export default Todos;
-
-
-  import React, { Component } from 'react'
-
-  class Todo extends Component {
-    render(){
-      return(
-        <li>
-          {this.props.text}
-        </li>
-      )
-    }
-  }
-```
-
-Boot up the react/redux app and give it a shot.  You should see a functioning application.  
+  
+ Alright, we just gave each list element into its own component, and got our code back to working again.  Sounds like a good refactoring.  Boot up the react/redux app and give it a shot.  You should see a functioning application.  
 
 ## Cleanup
 
