@@ -16,7 +16,7 @@ Ok, so if you open the components/todos/Todos.js you can see how we are currentl
 ```javascript
   // src/components/Todos.js
 
-	import React, { Component } from 'react'
+  import React, { Component } from 'react'
 
 	class Todos extends Component {
 
@@ -43,9 +43,10 @@ All it does currently is render some text.  But we can move the code from our To
 Now completing this is not so bad.  We can access the list of todos inside the Todos component with a call to this.props.store.getState().todos.  So now, we just need to iterate through each todo in the list and create an li element for each one.  Go on and give it and give it a shot, I'll be waiting for you below.  
 
 Ok, ready to see the code?
-```javascript
-  // src/components/Todos.js
 
+`src/components/Todos.js`
+
+```javascript
 	import React, { Component } from 'react'
   import Todo from './Todo'
 
@@ -62,10 +63,14 @@ Ok, ready to see the code?
 	    )
 	  }
 	}
+```
 
+`src/components/Todo.js`
+
+```javascript
 	export default Todos;
 
-  // src/components/Todo.js
+
   import React, { Component } from 'react'
 
   class Todo extends Component {
