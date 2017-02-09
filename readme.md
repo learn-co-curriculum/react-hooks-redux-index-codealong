@@ -22,7 +22,7 @@ class Todos extends Component {
 
   render() {
 
-    const todos = this.props.store.getState().todos.map((todo) => {
+    const todos = this.props.store.getState().todos.map((todo, index) => {
       return <li key={index}>{todo.text}</li>
     });
 
@@ -66,6 +66,8 @@ If you open up the code, you'll see that inside the `./src/components/todos` fol
 Now we need to call that component from our map function in the Todos component.  And we need to tell each individual Todo about the text that it is rendering.  So we change our Todos component to the following.
 
 ```javascript
+// ./src/components/Todos.js 
+
 import React, { Component } from 'react';
 import Todo from './Todo'; /* code changed */
 
@@ -123,6 +125,8 @@ The first is that our CreateTodo Component's form is still live updating `{this.
 Ok, the next thing to fix is to ensure that each time we submit a todo, we clear out the input.  This is a little more complicated. Ok, so remember that each time we submit a form, we call handleSubmit. So now inside that handleSubmit function let's reset the *component's* state by changing our function to the following:
 
 ```javascript 
+// ./src/components/CreateTodo.js
+
 ...
 
 handleSubmit(event) {
