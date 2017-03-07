@@ -14,7 +14,7 @@ Our state is properly updating but we are not displaying these updates to the us
 Ok, so if you open the components/todos/Todos.js you can see how we are currently rendering todos.  
 
 ```javascript
-// ./src/components/Todos.js
+// ./src/components/todos/Todos.js
 
 import React, { Component } from 'react';
 
@@ -37,9 +37,9 @@ class Todos extends Component {
 export default Todos;
 ```
 
-So above you can see that we have passed our store to the Todos component as a prop. Then we access the array of todos by calling store.getState(), and calling map to return an array of react elements, each of type li. 
+So above you can see that we have passed our store to the Todos component as a prop. Then we access the array of todos by calling store.getState(), and calling map to return an array of React elements, each of type li.
 
-## Refactoring into a Todo Component 
+## Refactoring into a Todo Component
 
 So each todo is just a list element, but soon we will need a button for each todo as well.  This simple list element is now having its own appearance, and behavior, so let's make a Todo component where we can manage each todo. Then, in our Todos component we will no longer have map return an array of li elements, but rather have it return an array of Todo components, and each Todo component will render the list element.  
 
@@ -66,7 +66,7 @@ export default Todo;
 Now we need to call that component from our map function in the Todos component.  And we need to tell each individual Todo about the text that it is rendering.  So we change our Todos component to the following.
 
 ```javascript
-// ./src/components/Todos.js 
+// ./src/components/todos/Todos.js
 
 import React, { Component } from 'react';
 import Todo from './Todo'; /* code changed */
@@ -89,17 +89,17 @@ class Todos extends Component {
 
 export default Todos;
 ```
-  
+
 Alright, we just gave each list element its own component, and got our code back to working again. Sounds like a good refactoring. Boot up the __React & Redux__ app by running `npm install && npm start` and give it a shot. You should see a functioning application. ~
 
 ## Cleanup
 
 There's just a couple small items to clean up.
 
-The first is that our CreateTodo Component's form is still live updating `{this.state.text}` below the input each time the user types something. Let's fix that by going to the `./src/components/CreateTodo.js` file and removing the line `{this.state.text}`, towards the bottom of our render() function.
+The first is that our CreateTodo Component's form is still live updating `{this.state.text}` below the input each time the user types something. Let's fix that by going to the `./src/components/todos/CreateTodo.js` file and removing the line `{this.state.text}`, towards the bottom of our render() function.
 
 ```javascript
-// ./src/components/CreateTodo.js
+// ./src/components/todos/CreateTodo.js
 
 ...
 
@@ -124,18 +124,18 @@ render() {
 
 Ok, the next thing to fix is to ensure that each time we submit a todo, we clear out the input. This is a little more complicated. Ok, so remember that each time we submit a form, we call handleSubmit. So now inside that handleSubmit function let's reset the *component's* state by changing our function to the following:
 
-```javascript 
-// ./src/components/CreateTodo.js
+```javascript
+// ./src/components/todos/CreateTodo.js
 
 ...
 
 handleSubmit(event) {
   event.preventDefault();
   this.props.store.dispatch({
-    type: 'ADD_TODO', 
+    type: 'ADD_TODO',
     todo: this.state,
   });
-  this.setState({ 
+  this.setState({
     text: '',
   });
 }
@@ -145,8 +145,8 @@ handleSubmit(event) {
 
 Ok, so this line is properly resetting the component's state to a blank string each time a user submits the form. However, if you try submitting the form now, you won't see that input being reset. This is because the input's value is not referencing that state. But we can ensure that the input does reference the state by changing our __render()__ function in the __CreateTodo__ component to the following:
 
-```javascript 
-// ./src/components/CreateTodo.js
+```javascript
+// ./src/components/todos/CreateTodo.js
 
 ...
 
@@ -156,10 +156,10 @@ render() {
       <form onSubmit={(event) => this.handleSubmit(event)}>
         <p>
 	  <label>add todo</label>
-	  <input 
-	    type="text" 
-	    value={this.state.text} /* <- add value here */ 
-	    onChange={(event) => this.handleChange(event)} /> 
+	  <input
+	    type="text"
+	    value={this.state.text} /* <- add value here */
+	    onChange={(event) => this.handleChange(event)} />
         </p>
         <input type="submit" />
       </form>
@@ -171,7 +171,7 @@ render() {
 
 ```
 
-So as you can see the value of the input now directly corresponds to the component's state. This is called a controlled component (see the references section below). Now if you retry submitting the form in your react app, you will see everything working.
+So as you can see the value of the input now directly corresponds to the component's state. This is called a controlled component (see the references section below). Now if you retry submitting the form in your React app, you will see everything working.
 
 ## Summary
 
