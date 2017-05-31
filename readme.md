@@ -11,7 +11,7 @@ Our state is properly updating but we are not displaying these updates to the us
 
 ## Displaying todos
 
-Ok, so if you open the components/todos/Todos.js you can see how we are currently rendering todos.  
+Ok, so if you open the `components/todos/Todos.js` you can see how we are currently rendering todos.  
 
 ```javascript
 // ./src/components/todos/Todos.js
@@ -37,15 +37,15 @@ class Todos extends Component {
 export default Todos;
 ```
 
-So above you can see that we have passed our store to the Todos component as a prop. Then we access the array of todos by calling store.getState(), and calling map to return an array of React elements, each of type li.
+So above you can see that we have passed our store to the __Todos__ component as a prop. Then we access the array of todos by calling `store.getState()`, and calling map to return an array of __React__ elements, each of type li.
 
 ## Refactoring into a Todo Component
 
-So each todo is just a list element, but soon we will need a button for each todo as well.  This simple list element is now having its own appearance, and behavior, so let's make a Todo component where we can manage each todo. Then, in our Todos component we will no longer have map return an array of li elements, but rather have it return an array of Todo components, and each Todo component will render the list element.  
+So each todo is just a list element, but soon we will need a button for each todo as well.  This simple list element is now having its own appearance, and behavior, so let's make a __Todo__ component where we can manage each todo. Then, in our __Todos__ component we will no longer have map return an array of li elements, but rather have it return an array of __Todo__ components, and each __Todo__ component will render the list element.  
 
 That was a mouthful. Let's make the changes.  
 
-If you open up the code, you'll see that inside the `./src/components/todos` folder, we have a file `Todo.js`.  Inside it we have a Todo component that currenly just renders a div.  Remember we want it to instead render out the li element that currently lives inside the map function in the Todos component.  Let's move it to our todo component.
+If you open up the code, you'll see that inside the `./src/components/todos` folder, we have a file `Todo.js`.  Inside it we have a __Todo__ component that currenly just renders a div.  Remember we want it to instead render out the li element that currently lives inside the map function in the __Todos__ component.  Let's move it to our __Todo__ component.
 
 ```javascript
 // ./src/components/todos/Todo.js
@@ -63,7 +63,7 @@ class Todo extends Component {
 export default Todo;
 ```
 
-Now we need to call that component from our map function in the Todos component.  And we need to tell each individual Todo about the text that it is rendering.  So we change our Todos component to the following.
+Now we need to call that component from our map function in the __Todos__ component.  And we need to tell each individual Todo about the text that it is rendering.  So we change our __Todos__ component to the following.
 
 ```javascript
 // ./src/components/todos/Todos.js
@@ -96,7 +96,7 @@ Alright, we just gave each list element its own component, and got our code back
 
 There's just a couple small items to clean up.
 
-The first is that our CreateTodo Component's form is still live updating `{this.state.text}` below the input each time the user types something. Let's fix that by going to the `./src/components/todos/CreateTodo.js` file and removing the line `{this.state.text}`, towards the bottom of our render() function.
+The first is that our __CreateTodo__ component's form is still live updating `{this.state.text}` below the input each time the user types something. Let's fix that by going to the `./src/components/todos/CreateTodo.js` file and removing the line `{this.state.text}`, towards the bottom of our __render()__ function.
 
 ```javascript
 // ./src/components/todos/CreateTodo.js
@@ -122,7 +122,7 @@ render() {
 
 ```
 
-Ok, the next thing to fix is to ensure that each time we submit a todo, we clear out the input. This is a little more complicated. Ok, so remember that each time we submit a form, we call handleSubmit. So now inside that handleSubmit function let's reset the *component's* state by changing our function to the following:
+Ok, the next thing to fix is to ensure that each time we submit a todo, we clear out the input. This is a little more complicated. Ok, so remember that each time we submit a form, we call __handleSubmit__. So now inside that __handleSubmit__ function let's reset the *component's* state by changing our function to the following:
 
 ```javascript
 // ./src/components/todos/CreateTodo.js
@@ -171,7 +171,7 @@ render() {
 
 ```
 
-So as you can see the value of the input now directly corresponds to the component's state. This is called a controlled component (see the references section below). Now if you retry submitting the form in your React app, you will see everything working.
+So as you can see the value of the input now directly corresponds to the component's state. This is called a controlled component (see the references section below). Now if you retry submitting the form in your __React__ app, you will see everything working.
 
 ## Summary
 
