@@ -56,7 +56,7 @@ export default connect(mapStateToProps)(TodosContainer);
 We can confirm this is working by adding a log in the render of TodosContainer
 and then adding TodosContainer to our App component so it will be rendered.
 
-Now that we have a way to get data from __Redux__, we an create a presentational
+Now that we have a way to get data from __Redux__, we can create a presentational
 component to handle displaying our todos.
 
 ## Creating a Presentational Todo Component
