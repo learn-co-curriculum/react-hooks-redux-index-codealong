@@ -153,4 +153,3 @@ the store, and then iterating through the list in the __Todos__ component.
 ## References
 
 - [React Documentation - Controlled Components](https://facebook.github.io/react/docs/forms.html)
-
