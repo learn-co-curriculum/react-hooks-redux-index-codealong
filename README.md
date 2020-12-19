@@ -1,11 +1,11 @@
-# Displaying a List of items with Redux
+# Displaying a List of Items with Redux
 
 ## Objectives
 
 With this lesson we'll finish up what we worked on the in the forms code along
 by displaying our list of todos. By the end of this lesson, you will be able to:
 
-* Display a list of elements from our __Redux__ store
+- Display a list of elements from our **Redux** store
 
 ## Goal
 
@@ -17,128 +17,98 @@ the store to reference the list of Todos.
 
 The `CreateTodo` component is handling the creation side of things, so let's
 make a new component where we'll be getting todos from the store. We'll call
-this `TodosContainer` and connect it to __Redux__.
-
+this `TodosContainer` and connect it to **Redux**.
 
 ```js
-// ./src/components/todos/TodosContainer.js
+// ./src/features/todos/TodosContainer.js
+import React from "react";
 
-import React, { Component } from 'react';
-import { connect } from 'react-redux'
+function TodoContainer() {
+  return <div>TodoContainer</div>;
+}
 
-class TodosContainer extends Component {
-
-  render() {
-    return(
-      <div></div>
-    );
-  }
-};
-
-export default connect()(TodosContainer);
+export default TodoContainer;
 ```
 
 Now, we aren't worried about dispatching actions here, only getting state from
-__Redux__, so we'll need to write out a `mapStateToProps()` function and include
-it as an argument for `connect()`:
+**Redux**, so we'll need to import `useSelector` and write a function to select
+the todos from our store state:
 
 ```js
-...
-const mapStateToProps = state => {
-  return {
-    todos: state.todos
-  }
+import React from "react";
+import { useSelector } from "react-redux";
+
+function TodoContainer() {
+  const todos = useSelector((state) => state.todos.entities);
+
+  console.log(todos);
+  return <div>TodoContainer</div>;
 }
 
-export default connect(mapStateToProps)(TodosContainer);
+export default TodoContainer;
 ```
 
-We can confirm this is working by adding a log in the render of TodosContainer
-and then adding TodosContainer to our App component so it will be rendered.
+We can confirm this is working by adding a log in out `TodosContainer`
+and then adding `TodosContainer` to our `App` component so it will be rendered.
 
-Now that we have a way to get data from __Redux__, we can create a presentational
-component to handle displaying our todos.
+Now that we have a way to get data from **Redux**, we can create a component to
+handle displaying our todos.
 
-## Creating a Presentational Todo Component
+## Creating a Todo Component
 
 To start, we'll have each todo rendered as a list item. Inside the
-`./src/components/` folder, create a file `Todo.js`. Inside it, write a
-functional component that returns an `li` displaying props:
+`./src/features/todos` folder, create a file `Todo.js`. Inside it, write a
+component that returns an `li` displaying props:
 
 ```js
-// ./src/components/todos/Todo.js
+// ./src/features/todos/Todo.js
+import React from "react";
 
-import React from 'react'
-
-const Todo = props => {
-  return (
-    <li>{props.text}</li>
-  );
-};
+function Todo({ text }) {
+  return <li>{text}</li>;
+}
 
 export default Todo;
 ```
 
 Now we need to call that component from a map function in the
-__TodosContainer__ component:
+**TodosContainer** component:
 
 ```js
-// ./src/components/todos/TodosContainer.js
+// ./src/features/todos/TodosContainer.js
+import React from "react";
+import { useSelector } from "react-redux";
+import Todo from "./Todo";
 
-import React, { Component } from 'react';
-import { connect } from 'react-redux'
-import Todo from './Todo'
+function TodoContainer() {
+  const todos = useSelector((state) => state.todos.entities);
 
-class TodosContainer extends Component {
-
-  renderTodos = () => this.props.todos.map((todo, id) => <Todo key={id} text={todo} />)
-
-  render() {
-    return(
-      <div>
-        {this.renderTodos()}
-      </div>
-    );
-  }
-};
-
-const mapStateToProps = state => {
-  return {
-    todos: state.todos
-  }
+  const todoList = todos.map((todo, index) => <Todo key={index} text={todo} />);
+  return <ul>{todoList}</ul>;
 }
 
-export default connect(mapStateToProps)(TodosContainer);
-
-
+export default TodoContainer;
 ```
 
-Now our TodosContainer is mapping over the todos it received from __Redux__,
-passing the value of each todo into a child component, Todo. Todo in this case
-doesn't have any __Redux__ related code, and is a regular, functional component.
+Now our TodosContainer is mapping over the todos it received from **Redux**,
+passing the value of each todo into a child component, `Todo`. `Todo` in this case
+doesn't have any **Redux** related code, and is a regular, functional component.
 
 ## Cleanup Todo Input
 
 Each time we submit a todo, we want to clear out the input. Ok, so remember that
-each time we submit a form, we call __handleSubmit__. Inside that
-__handleSubmit__ function let's reset the *component's* state by changing our
+each time we submit a form, we call `handleSubmit` Inside that
+`handleSubmit` function let's reset the component's state by changing our
 function to the following:
 
 ```js
-// ./src/components/todos/CreateTodo.js
+// ./src/features/todos/CreateTodo.js
 
-...
-
-handleSubmit = event => {
+function handleSubmit(event) {
   event.preventDefault();
-  this.props.addTodo(this.state)
-  this.setState({
-    text: '',
-  })
+  dispatch(todoAdded(text));
+  setText("");
 }
-
-
-...
 ```
 
 That's it! We've got a working app that takes in form data and displays it on a
@@ -146,9 +116,5 @@ list.
 
 ## Summary
 
-Ok, so we got our __Todos__ component working simply by accessing the state from
-the store, and then iterating through the list in the __Todos__ component.
-
-## References
-
-- [React Documentation - Controlled Components](https://facebook.github.io/react/docs/forms.html)
+Ok, so we got our `Todos` component working simply by accessing the state from
+the store, and then iterating through the list in the `Todos` component.
