@@ -19,7 +19,7 @@ The `CreateTodo` component is handling the creation side of things, so let's
 make a new component where we'll be getting todos from the store. We'll call
 this `TodosContainer` and connect it to **Redux**.
 
-```js
+```jsx
 // ./src/features/todos/TodosContainer.js
 import React from "react";
 
@@ -34,7 +34,7 @@ Now, we aren't worried about dispatching actions here, only getting state from
 **Redux**, so we'll need to import `useSelector` and write a function to select
 the todos from our store state:
 
-```js
+```jsx
 import React from "react";
 import { useSelector } from "react-redux";
 
@@ -60,7 +60,7 @@ To start, we'll have each todo rendered as a list item. Inside the
 `./src/features/todos` folder, create a file `Todo.js`. Inside it, write a
 component that returns an `li` displaying props:
 
-```js
+```jsx
 // ./src/features/todos/Todo.js
 import React from "react";
 
@@ -74,7 +74,7 @@ export default Todo;
 Now we need to call that component from a map function in the
 **TodosContainer** component:
 
-```js
+```jsx
 // ./src/features/todos/TodosContainer.js
 import React from "react";
 import { useSelector } from "react-redux";
@@ -96,7 +96,7 @@ doesn't have any **Redux** related code, and is a regular, functional component.
 
 ## Cleanup Todo Input
 
-Each time we submit a todo, we want to clear out the input. Ok, so remember that
+Each time we submit a todo, we want to clear out the input. Remember that
 each time we submit a form, we call `handleSubmit` Inside that
 `handleSubmit` function let's reset the component's state by changing our
 function to the following:
@@ -116,5 +116,5 @@ list.
 
 ## Summary
 
-Ok, so we got our `Todos` component working simply by accessing the state from
-the store, and then iterating through the list in the `Todos` component.
+We got our `Todos` component working simply by accessing the state from the
+store, and then iterating through the list in the `Todos` component.
