@@ -1,11 +1,8 @@
 # Displaying a List of Items with Redux
 
-## Objectives
+## Learning Goals
 
-With this lesson we'll finish up what we worked on the in the forms code along
-by displaying our list of todos. By the end of this lesson, you will be able to:
-
-- Display a list of elements from our **Redux** store
+- Display a list of elements from our Redux store
 
 ## Goal
 
